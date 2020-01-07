@@ -8,12 +8,11 @@ public class SequentialSearchST<Key extends Comparable, Value> {
   public void put(Key key, Value val) {
     Node temp = this.root;
 
-    root = new Node(key, val, temp);
-    temp = null; // force the garabage collector to discard object.
+    this.root = new Node(key, val, temp);
   }
 
   public Value get(Key key) {
-    for (Node node = this.root; node.next != null; node = node.next)
+    for (Node node = this.root; node != null; node = node.next)
       if (node.key.compareTo(key) == 0)
         return node.value;
 
@@ -22,12 +21,12 @@ public class SequentialSearchST<Key extends Comparable, Value> {
 
   @Override
   public String toString() {
-    String result = "{ ";
+    String result = "";
 
-    for (Node node = this.root; node.next != null; node = node.next)
-      result = node.key + " : " + node.value;
+    for (Node node = this.root; node != null; node = node.next)
+      result += node + " ";
 
-    return result += " }";
+    return result;
   }
 
   private class Node {
@@ -45,6 +44,11 @@ public class SequentialSearchST<Key extends Comparable, Value> {
       this.next = next;
       this.key = key;
       this.value = val;
+    }
+
+    @Override
+    public String toString() {
+      return "{ " + this.key + " : " + this.value + " }";
     }
   }
 }
